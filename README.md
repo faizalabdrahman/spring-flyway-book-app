@@ -5,3 +5,5 @@
 ![](https://img.shields.io/badge/Tools-Sourcetree-informational?style=flat&logo=sourcetree&logoColor=white&color=45b08c)
 ![](https://img.shields.io/badge/Tools-Flyway-informational?style=flat&logo=Flyway&logoColor=white&color=45b08c)
 ![](https://img.shields.io/badge/Database-MySQL-informational?style=flat&logo=mysql&logoColor=white&color=15998e)
+
+Spring Book is a Spring Boot application built using Maven. It is an application where I learn how to use Flyway for managing and automating database deployments, from version control.
