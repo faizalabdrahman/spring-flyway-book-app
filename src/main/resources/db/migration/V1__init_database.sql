@@ -4,7 +4,6 @@ drop table if exists hibernate_sequence;
 create table book
 (
     id bigint not null auto_increment,
-    author_id bigint,
     isbn varchar(255),
     publisher varchar(255),
     title varchar(255),
