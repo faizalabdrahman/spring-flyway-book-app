@@ -1,9 +1,9 @@
-drop table if exists author;
+DROP TABLE IF EXISTS author;
 
-create table author
+CREATE TABLE author
 (
-    id bigint not null auto_increment,
-    first_name varchar(255),
-    last_name varchar(255),
-    primary key (id)
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    PRIMARY KEY (id)
 ) engine=InnoDB;

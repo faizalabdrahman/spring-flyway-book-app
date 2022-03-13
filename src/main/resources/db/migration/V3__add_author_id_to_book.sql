@@ -1,1 +1,1 @@
-alter table book ADD author_id BIGINT;
+ALTER TABLE book ADD author_id BIGINT;
