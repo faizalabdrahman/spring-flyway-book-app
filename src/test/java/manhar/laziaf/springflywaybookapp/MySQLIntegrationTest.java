@@ -1,8 +1,10 @@
 package manhar.laziaf.springflywaybookapp;
 
 import manhar.laziaf.springflywaybookapp.domain.AuthorUuid;
+import manhar.laziaf.springflywaybookapp.domain.BookNatural;
 import manhar.laziaf.springflywaybookapp.domain.BookUuid;
 import manhar.laziaf.springflywaybookapp.repositories.AuthorUuidRepository;
+import manhar.laziaf.springflywaybookapp.repositories.BookNaturalRepository;
 import manhar.laziaf.springflywaybookapp.repositories.BookRepository;
 import manhar.laziaf.springflywaybookapp.repositories.BookUuidRepository;
 import org.junit.jupiter.api.Test;
@@ -13,6 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ActiveProfiles("local")
@@ -29,6 +32,9 @@ public class MySQLIntegrationTest
 
     @Autowired
     AuthorUuidRepository authorUuidRepository;
+
+    @Autowired
+    BookNaturalRepository bookNaturalRepository;
 
     @Test
     public void testMySql()
@@ -61,5 +67,16 @@ public class MySQLIntegrationTest
 
         assertNotNull(savedAuthorUuid.getId());
         assertNotNull(fetchedAuthorUuid.getId());
+    }
+
+    @Test
+    public void testBookNatural()
+    {
+        BookNatural bookNatural = new BookNatural("Design Pattern", "987", "Random House");
+        BookNatural savedBookNatural = bookNaturalRepository.save(bookNatural);
+
+        BookNatural fetchBookNatural = bookNaturalRepository.getById(savedBookNatural.getTitle());
+
+        assertEquals(savedBookNatural.getTitle(), fetchBookNatural.getTitle());
     }
 }
