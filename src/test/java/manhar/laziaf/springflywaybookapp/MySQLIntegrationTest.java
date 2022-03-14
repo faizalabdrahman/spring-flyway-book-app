@@ -3,10 +3,9 @@ package manhar.laziaf.springflywaybookapp;
 import manhar.laziaf.springflywaybookapp.domain.AuthorUuid;
 import manhar.laziaf.springflywaybookapp.domain.BookNatural;
 import manhar.laziaf.springflywaybookapp.domain.BookUuid;
-import manhar.laziaf.springflywaybookapp.repositories.AuthorUuidRepository;
-import manhar.laziaf.springflywaybookapp.repositories.BookNaturalRepository;
-import manhar.laziaf.springflywaybookapp.repositories.BookRepository;
-import manhar.laziaf.springflywaybookapp.repositories.BookUuidRepository;
+import manhar.laziaf.springflywaybookapp.domain.composite.AuthorComposite;
+import manhar.laziaf.springflywaybookapp.domain.composite.NameId;
+import manhar.laziaf.springflywaybookapp.repositories.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -35,6 +34,9 @@ public class MySQLIntegrationTest
 
     @Autowired
     BookNaturalRepository bookNaturalRepository;
+
+    @Autowired
+    AuthorCompositeRepository authorCompositeRepository;
 
     @Test
     public void testMySql()
@@ -78,5 +80,22 @@ public class MySQLIntegrationTest
         BookNatural fetchBookNatural = bookNaturalRepository.getById(savedBookNatural.getTitle());
 
         assertEquals(savedBookNatural.getTitle(), fetchBookNatural.getTitle());
+    }
+
+    @Test
+    public void testAuthorComposite()
+    {
+        NameId nameId = new NameId("Jon", "Stokes");
+        AuthorComposite authorComposite = new AuthorComposite();
+        authorComposite.setFirstName(nameId.getFirstName());
+        authorComposite.setLastName(nameId.getLastName());
+        authorComposite.setCountry("Singapore");
+
+        AuthorComposite savedAuthorComposite = authorCompositeRepository.save(authorComposite);
+
+        AuthorComposite fetchAuthorComposite = authorCompositeRepository.getById(nameId);
+
+        assertNotNull(savedAuthorComposite);
+        assertNotNull(fetchAuthorComposite);
     }
 }
