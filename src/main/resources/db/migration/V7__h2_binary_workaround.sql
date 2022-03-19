@@ -1,0 +1,1 @@
+ALTER TABLE book_uuid CHANGE ID id VARBINARY(16);

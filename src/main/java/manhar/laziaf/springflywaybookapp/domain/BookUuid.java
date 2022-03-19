@@ -3,35 +3,36 @@ package manhar.laziaf.springflywaybookapp.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Objects;
+import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
-public class Book
+public class BookUuid
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(columnDefinition = "VARBINARY(16)", updatable = false, nullable = false)
+    private UUID id;
 
     private String title;
     private String isbn;
     private String publisher;
 
-    private Long authorId;
-
-    public Book(String title, String isbn, String publisher, Long authorId)
+    public BookUuid(String title, String isbn, String publisher)
     {
         this.title = title;
         this.isbn = isbn;
         this.publisher = publisher;
-        this.authorId = authorId;
     }
 
     @Override
@@ -40,9 +41,9 @@ public class Book
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Book book = (Book) o;
+        BookUuid bookUuid = (BookUuid) o;
 
-        return Objects.equals(id, book.id);
+        return Objects.equals(id, bookUuid.id);
     }
 
     @Override
