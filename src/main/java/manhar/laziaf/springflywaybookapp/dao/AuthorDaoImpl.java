@@ -32,12 +32,7 @@ public class AuthorDaoImpl implements AuthorDao
 
             if(resultSet.next())
             {
-                Author author = new Author();
-                author.setId(id);
-                author.setFirstName(resultSet.getString("first_name"));
-                author.setLastName(resultSet.getString("last_name"));
-
-                return author;
+                return getAuthorFromResultSet(resultSet);
             }
         }
         catch(SQLException e)
@@ -48,18 +43,7 @@ public class AuthorDaoImpl implements AuthorDao
         {
             try
             {
-                if(resultSet != null)
-                {
-                    resultSet.close();
-                }
-                else if(ps != null)
-                {
-                    ps.close();
-                }
-                else if(connection != null)
-                {
-                    connection.close();
-                }
+                closeAll(resultSet, ps, connection);
             }
             catch(SQLException e)
             {
@@ -69,6 +53,7 @@ public class AuthorDaoImpl implements AuthorDao
 
         return null;
     }
+
     @Override
     public Author findAuthorByName(String firstName, String lastName)
     {
@@ -86,12 +71,7 @@ public class AuthorDaoImpl implements AuthorDao
 
             if(resultSet.next())
             {
-                Author author = new Author();
-                author.setId(resultSet.getLong("id"));
-                author.setFirstName(resultSet.getString("first_name"));
-                author.setLastName(resultSet.getString("last_name"));
-
-                return author;
+                return getAuthorFromResultSet(resultSet);
             }
 
         }
@@ -103,18 +83,7 @@ public class AuthorDaoImpl implements AuthorDao
         {
             try
             {
-                if(resultSet != null)
-                {
-                    resultSet.close();
-                }
-                else if(ps != null)
-                {
-                    ps.close();
-                }
-                else if(connection != null)
-                {
-                    connection.close();
-                }
+                closeAll(resultSet, ps, connection);
             }
             catch(SQLException e)
             {
@@ -123,5 +92,31 @@ public class AuthorDaoImpl implements AuthorDao
         }
 
         return null;
+    }
+
+    private Author getAuthorFromResultSet(ResultSet resultSet) throws SQLException
+    {
+        Author author = new Author();
+        author.setId(resultSet.getLong("id"));
+        author.setFirstName(resultSet.getString("first_name"));
+        author.setLastName(resultSet.getString("last_name"));
+
+        return author;
+    }
+
+    private void closeAll(ResultSet resultSet, PreparedStatement ps, Connection connection) throws SQLException
+    {
+        if(resultSet != null)
+        {
+            resultSet.close();
+        }
+        else if(ps != null)
+        {
+            ps.close();
+        }
+        else if(connection != null)
+        {
+            connection.close();
+        }
     }
 }
