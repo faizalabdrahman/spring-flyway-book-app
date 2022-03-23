@@ -4,6 +4,7 @@ import manhar.laziaf.springflywaybookapp.domain.AuthorUuid;
 import manhar.laziaf.springflywaybookapp.domain.BookNatural;
 import manhar.laziaf.springflywaybookapp.domain.BookUuid;
 import manhar.laziaf.springflywaybookapp.domain.composite.AuthorComposite;
+import manhar.laziaf.springflywaybookapp.domain.composite.AuthorEmbedded;
 import manhar.laziaf.springflywaybookapp.domain.composite.NameId;
 import manhar.laziaf.springflywaybookapp.repositories.*;
 import org.junit.jupiter.api.Test;
@@ -37,6 +38,9 @@ public class MySQLIntegrationTest
 
     @Autowired
     AuthorCompositeRepository authorCompositeRepository;
+
+    @Autowired
+    AuthorEmbeddedRepository authorEmbeddedRepository;
 
     @Test
     public void testMySql()
@@ -97,5 +101,21 @@ public class MySQLIntegrationTest
 
         assertNotNull(savedAuthorComposite);
         assertNotNull(fetchAuthorComposite);
+    }
+
+    @Test
+    public void testAuthorEmbeddedComposite()
+    {
+        NameId nameId = new NameId("Jon", "Stokes");
+        AuthorEmbedded authorEmbedded = new AuthorEmbedded();
+        authorEmbedded.setNameId(nameId);
+        authorEmbedded.setCountry("Singapore");
+
+        AuthorEmbedded savedAuthorEmbedded = authorEmbeddedRepository.save(authorEmbedded);
+
+        AuthorEmbedded fetchAuthorEmbedded = authorEmbeddedRepository.getById(savedAuthorEmbedded.getNameId());
+
+        assertNotNull(savedAuthorEmbedded);
+        assertNotNull(fetchAuthorEmbedded);
     }
 }
